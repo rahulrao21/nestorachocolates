@@ -1,0 +1,10 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: nestora-chocolates-pdb
+  namespace: nestora-chocolates
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: nestora-chocolates

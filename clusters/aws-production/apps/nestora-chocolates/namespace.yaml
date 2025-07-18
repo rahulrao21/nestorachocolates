@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: nestora-chocolates
+  labels:
+    name: nestora-chocolates
+    environment: production

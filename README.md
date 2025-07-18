@@ -95,6 +95,35 @@ npm run dev
 - `npm run preview` - Preview production build
 - `npm run lint` - Run ESLint
 
+## 🚀 AWS Production Deployment
+
+### Quick Deploy to AWS
+```bash
+# Set up environment
+export GITHUB_TOKEN=your_github_token
+export AWS_REGION=us-east-1
+
+# Deploy everything
+./scripts/deploy-aws.sh
+```
+
+This deploys:
+- EKS cluster with auto-scaling
+- ECR container registry
+- Application Load Balancer
+- Route53 DNS with SSL
+- Flux GitOps
+- Monitoring stack
+
+**Live URL**: https://nestorainc.com
+
+### Requirements
+- AWS CLI configured
+- Domain: nestorainc.com (GoDaddy)
+- Terraform, kubectl, flux CLI
+
+See [AWS Deployment Guide](docs/AWS-DEPLOYMENT.md) for detailed instructions.
+
 ## 🐳 Docker Deployment
 
 ### Build Docker Image
@@ -111,7 +140,7 @@ docker run -p 8080:80 nestora-chocolates:latest
 
 Visit `http://localhost:8080` to view the application.
 
-## ☸️ Kubernetes Deployment
+## ☸️ Local Kubernetes Deployment
 
 ### Prerequisites
 

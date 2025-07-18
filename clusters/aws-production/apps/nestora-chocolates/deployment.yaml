@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nestora-chocolates
+  namespace: nestora-chocolates
+  labels:
+    app: nestora-chocolates
+    environment: production
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nestora-chocolates
+  template:
+    metadata:
+      labels:
+        app: nestora-chocolates
+        environment: production
+    spec:
+      containers:
+      - name: nestora-chocolates
+        image: ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/nestora-chocolates:latest
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: ENVIRONMENT
+          value: "production"
+      imagePullSecrets:
+      - name: ecr-secret
