@@ -1,0 +1,26 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - k8s-deployment.yaml
+
+namePrefix: nestora-chocolates-
+
+commonLabels:
+  app: nestora-chocolates
+  environment: production
+  managed-by: flux
+
+patchesStrategicMerge:
+  - |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: nestora-chocolates
+    spec:
+      template:
+        spec:
+          containers:
+          - name: nestora-chocolates
+            image: nestora-chocolates:latest
+            imagePullPolicy: Never
